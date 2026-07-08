@@ -1,0 +1,47 @@
+[package]
+name = "rust_lib_inputvoice"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "staticlib"]
+
+[dependencies]
+flutter_rust_bridge = "=2.12.0"
+# raw-api: access to whisper_log_set/ggml_log_set so we can detect at runtime
+# whether CUDA really initialized (TD-003: whisper.cpp falls back to CPU
+# silently; the log stream is the only reliable signal).
+whisper-rs = { version = "0.16.0", features = ["cuda", "raw-api"] }
+windows = { version = "0.62.2", features = [
+  "Win32_UI_WindowsAndMessaging",
+  "Win32_Graphics_Gdi",
+  "Win32_System_SystemInformation",
+  "Win32_System_Threading",
+  "Win32_UI_Input_KeyboardAndMouse",
+  "Win32_System_DataExchange",
+  "Win32_System_Memory",
+  "Win32_System_LibraryLoader",
+  "Win32_System_RemoteDesktop",
+  "Win32_System_Registry",
+  "Win32_Foundation",
+] }
+# Audio capture (FR-02): WASAPI input stream in the device's native format.
+cpal = "0.18"
+# Windowed-sinc resampling from the device's native rate to 16 kHz.
+rubato = "3.0"
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter", "json"] }
+tracing-appender = "0.2.5"
+dirs = "6.0.0"
+sha2 = "0.11"
+# Persistent config (FR-10): serialize AppConfig to APPDATA Breeze config.json.
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[dev-dependencies]
+hound = "3.5"
+tempfile = "3"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(frb_expand)'] }

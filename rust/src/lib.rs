@@ -1,0 +1,13 @@
+pub mod api;
+pub mod audio;
+pub mod clipboard;
+pub mod config;
+mod frb_generated;
+pub mod hotkey;
+pub mod inject;
+pub mod logging;
+pub mod model;
+pub mod paths;
+pub mod orchestrator;
+pub mod theme;
+pub mod whisper_engine;

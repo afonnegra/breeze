@@ -1,0 +1,9 @@
+# Aísla el PDB server (mspdbsrv) de los builds C/C++ anidados (whisper.cpp vía
+# cmake) del MSBuild externo que orquesta el build de Flutter/cargokit.
+#
+# Sin esto: el MSBuild de `flutter build windows` exporta _MSPDBSRV_ENDPOINT_
+# para su propia sesión; el cl.exe lanzado por el cmake interno hereda ese
+# endpoint ajeno y falla con C1041 ("cannot open program database") en los
+# TryCompile. force = true pisa el valor heredado. Ver docs/BUILDING.md.
+[env]
+_MSPDBSRV_ENDPOINT_ = { value = "inputvoice-nested-build", force = true }
