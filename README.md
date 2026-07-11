@@ -5,8 +5,11 @@
 [![License: PolyForm Noncommercial](https://img.shields.io/badge/License-PolyForm%20Noncommercial%201.0.0-blue.svg)](LICENSE)
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows%2010%2F11%20x64-0078D6.svg)](#requirements)
 [![Built with Rust + Flutter](https://img.shields.io/badge/Built%20with-Rust%20%2B%20Flutter-DE4A16.svg)](#how-it-works)
+[![Latest release](https://img.shields.io/github/v/release/afonnegra/breeze)](https://github.com/afonnegra/breeze/releases/latest)
 
 Hold `Ctrl`+`Win`, speak, release. The text appears where your cursor already is, in any application. No cloud, no account, no network. Your voice is transcribed by Whisper running on your own NVIDIA GPU and never leaves the machine.
+
+**[Download the latest installer](https://github.com/afonnegra/breeze/releases/latest)** (self-contained, about 833 MB: app, Whisper model, CUDA and VC++ runtimes included).
 
 ---
 
@@ -83,13 +86,15 @@ Without a compatible GPU/driver, whisper.cpp silently falls back to CPU. Breeze 
 
 ### From the installer
 
-Build the self-contained installer with [Inno Setup 6](https://jrsoftware.org/isinfo.php):
+Download `breeze-setup-1.0.0.exe` from the [latest release](https://github.com/afonnegra/breeze/releases/latest) and run it. The installer is self-contained: it bundles `breeze.exe`, the Rust/CUDA DLLs, the app-local VC++ runtime, and the Whisper model, so it works on a clean machine with no separate installs. It is not code-signed, so Windows SmartScreen will warn on first run: choose "More info", then "Run anyway".
+
+To build the installer yourself instead, use [Inno Setup 6](https://jrsoftware.org/isinfo.php):
 
 ```
 & 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe' installer\breeze.iss
 ```
 
-The output installer bundles `breeze.exe`, the Rust/CUDA DLLs, the app-local VC++ runtime, and the Whisper model; it runs on a clean machine with no separate CUDA or VC++ redistributable install. (If a tagged release is published, download the prebuilt installer from the Releases page instead.)
+The output lands in `installer\output\`. Building it requires the release bundle and the model in place first; see [docs/BUILDING.md](docs/BUILDING.md).
 
 ### Build from source
 
